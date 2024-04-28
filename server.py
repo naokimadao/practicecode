@@ -1,4 +1,4 @@
-# server.py
+# server.py　Hello Worldを表示するだけのコード
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
