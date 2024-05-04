@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>DBの練習</title>
+    <link rel="stylesheet" type="text/css" href="design.css">
+</head>
+<body>
+    <form id="recordForm">
+        <p>時刻：<strong id="time"></strong></p>
+        <button type="button" id="refreshTime">時刻更新</button>
+        <button type="submit" id="addRecordToDB">時間書込</button>
+        <input type="number" id="recordId" placeholder="IDを入力">
+        <button id="deleteRecord">データ削除</button>
+        <label for="recordId">レコードID:</label>
+        <input type="text" id="recordIdInput" name="recordId">
+        <button id="getRecord">レコードを参照</button>
+        <div id="recordArea"></div>
+
+    </form>
+    <script src="ugoku.js"></script>
+</body>
+</html>
