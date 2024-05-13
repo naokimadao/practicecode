@@ -13,7 +13,7 @@ def get_all_records():
     # 辞書形式に変換
     record_list = []
     for record in records:
-        record_dict = {'id': record[0], 'timestamp': record[1], 'data': record[2], 'name': record[3], 'pass': record[4]}
+        record_dict = {'id': record[0], 'timestamp': record[1], 'data': record[2], 'name': record[3], 'pass': '********'}
         record_list.append(record_dict)
 
     return record_list

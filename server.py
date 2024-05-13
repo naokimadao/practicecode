@@ -6,6 +6,8 @@ from urllib.parse import urlparse, parse_qs
 from dbupdate import update_record
 from dballrecords import get_all_records
 from dbdelete_all_records import delete_all_records
+from loginpass_name import verify_user
+import bcrypt
 import json
 
 #-----------------------------------------------------------------------------------------------------
@@ -37,7 +39,7 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):#
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
                     self.wfile.write(json.dumps({
-                        'id': record[0], 'timestamp': record[1], 'data': record[2], 'name': record[3], 'pass': record[4]
+                        'id': record[0], 'timestamp': record[1], 'data': record[2], 'name': record[3], 'pass': '********'
                     }).encode())
                 else:
                     self.send_error(404, 'お探しのレコードはありません')
@@ -47,14 +49,15 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):#
 
         elif path == '/get-all-records':
             try:
-                records = get_all_records()
+                records = get_all_records()  # ここで record_list が records として取得されます
                 self.send_response(200)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
-                self.wfile.write(json.dumps(records).encode('utf-8'))
+                self.wfile.write(json.dumps(records).encode('utf-8'))  # records を JSON 形式でクライアントに送信します
             except Exception as e:
                 self.send_error(500, 'Internal Server Error: {}'.format(e))
             return
+ 
 
         # 静的ファイルの処理
         return super().do_GET()
@@ -131,6 +134,30 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):#
                 response = {'status': 'error', 'message': 'サーバーに正しいデータが送信できていません: {}'.format(str(e))}
                 self.wfile.write(json.dumps(response).encode('utf-8'))
                 
+        
+        elif self.path == '/login':
+            try:
+                content_length = int(self.headers['Content-Length'])
+                post_data = self.rfile.read(content_length)
+                credentials = json.loads(post_data.decode('utf-8'))
+                username = credentials.get('username')
+                password = credentials.get('password')
+                valid, message = verify_user(username, password)
+                if valid:
+                    self.send_response(200)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    response = {'status': 'success', 'message': message}
+                    self.wfile.write(json.dumps(response).encode('utf-8'))
+                else:
+                    self.send_response(401)
+                    self.send_header('Content-type', 'application/json')
+                    self.end_headers()
+                    response = {'status': 'fail', 'message': message}
+                    self.wfile.write(json.dumps(response).encode('utf-8'))
+            except Exception as e:
+                self.send_error(500, 'Server Error: {}'.format(e))
+
     def do_DELETE(self):
         if self.path == '/delete-all-records':
             try:
@@ -143,9 +170,9 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):#
             except Exception as e:
                 self.send_error(500, 'Server Error: {}'.format(e))
 # アドレス
-server_address = ('localhost', 8050)
+server_address = ('localhost', 8040)
 
 # Webサーバー起動
 with HTTPServer(server_address, CustomHTTPRequestHandler) as server:
-    print("Server running on port 8050...")
+    print("Server running on port 8040...")
     server.serve_forever()
