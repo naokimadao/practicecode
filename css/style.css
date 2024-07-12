@@ -1,0 +1,127 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav {
+    background: transparent; /* 背景を透明に設定 */
+    padding: 20px 0; /* 上下のパディングを20pxに設定 */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white; /* リンクの色 */
+    font-size: 20px;
+    padding: 10px 20px; /* リンクのパディングを調整 */
+    display: block; /* リンクをブロック要素として扱う */
+    transition: all 0.3s ease; /* スムーズな遷移効果 */
+    border-radius: 5px; /* 角の丸み */
+    background-color: transparent; /* 初期背景色 */
+}
+
+
+nav ul li a:hover, nav ul li a:focus {
+    background-color: rgba(255, 255, 255, 0.2); /* ホバー時の背景色を薄い白（透明度あり）に設定 */
+    color: #fff; /* ホバー時のテキスト色を白に保持 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影を付ける */
+    transform: translateY(-2px); /* 上に少し移動させる */
+}
+
+
+.hero {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    background: url('/img/topimage.jpeg') no-repeat center center;
+    background-size: cover; /* 背景画像をカバーする */
+    height: 100vh; /* 画面の高さを占める */
+}
+
+
+.hero img {
+    width: 100%;
+    height: auto;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.card {
+    width: 30%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+
+.card img {
+    max-width: 100%; /* カード内の画像の幅を制限 */
+    height: auto; /* 高さを自動調整 */
+}
+
+.card:nth-child(2) img {
+    margin-top: 50px;
+    width: 250px; /* 2番目のカードの画像の幅を50pxに設定 */
+    height: auto; /* 高さを自動調整し、アスペクト比を保持 */
+}
+
+.card:nth-child(3) img {
+    margin-top: 50px;
+    width: 250px; /* 2番目のカードの画像の幅を50pxに設定 */
+    height: auto; /* 高さを自動調整し、アスペクト比を保持 */
+}
+
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+
+/* CTA ボタンのスタイル */
+.cta-button {
+    position: fixed; /* ビューポートに対して固定 */
+    bottom: 20px; /* 下から20pxの位置 */
+    right: 20px; /* 右から20pxの位置 */
+    z-index: 1000; /* 他の要素の上に表示 */
+}
+
+.cta-button button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cta-button button:hover {
+    background-color: #0056b3;
+}

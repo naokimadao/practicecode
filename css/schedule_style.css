@@ -1,0 +1,251 @@
+/* CSSの設定 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #E0F7FA; /* 薄いブルーで背景を設定 */
+}
+
+header, nav ul {
+    background-color: #00ACC1; /* 濃いブルー色でナビゲーションバーを設定 */
+    padding: 1rem;
+    list-style: none;
+    margin: 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7列のグリッドで表示 */
+    gap: 5px;
+}
+
+.day-box {
+    padding: 10px;
+    background-color: #f0f0f0;
+    text-align: left; /* 中央揃えに設定 */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    height: 70px; /* ここで縦幅を大きく設定 */
+}
+
+.previous-month, .next-month {
+    background-color: rgba(240, 240, 240, 0.3); /* 背景色を薄くして区別 */
+    color: #aaa; /* 文字色を薄くする */
+}
+
+.day-header {
+    background-color: #B3E5FC; /* ヘッダーの背景色 */
+    text-align: center;
+}
+
+.day-box select {
+    width: 100%; /* プルダウンメニューの幅をボックスに合わせる */
+}
+
+.day-header, .day-box {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.day-box label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.day-box input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* モーダルの基本スタイル */
+.modal {
+    display: none; /* デフォルトでは非表示 */
+    position: fixed; /* 画面に固定 */
+    z-index: 1; /* コンテンツの上に表示 */
+    left: 0;
+    top: 0;
+    width: 100%; /* 全幅 */
+    height: 100%; /* 全高 */
+    overflow: auto; /* スクロールを許可 */
+    background-color: rgb(0,0,0); /* 背景色 */
+    background-color: rgba(0,0,0,0.5); /* 背景色（暗めに設定） */
+    border-radius: 15px;
+}
+
+/* モーダルコンテンツのスタイル */
+.modal-content {
+    background-color: rgba(224, 242, 241, 0.90); /* 薄い水色に透明度を加える */
+    margin: 5% auto; /* 中央に配置 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* 幅を50%に設定 */
+    border-radius: 15px; /* 角の丸みを追加 */
+}
+
+/* モーダルの内部レイアウト */
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2列のグリッド */
+    grid-template-rows: auto auto; /* 自動行 */
+    gap: 20px;
+}
+
+.modal-grid-left-top {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.modal-grid-left-bottom {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.modal-grid-right-top {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-grid-right-bottom {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-start; /* 左寄せ */
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#detailForm button {
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.cancel-btn {
+    background-color: #9d908f; 
+    color: white;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.overtimeInput {
+    display: block;
+    margin-top: 5px;
+    width: 80%;
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+
+.delete-btn {
+    background-color: #b9726d; /* 赤色 */
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.delete-btn:hover {
+    background-color: #d39494; /* 濃い赤色 */
+    border-radius: 2px;
+}
+
+.time-input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#overtimeContainer button {
+    margin-top: 10px;
+    display: block;
+}
+
+
+#bookmarkButtons button {
+    margin-right: 5px;
+}
+
+
+.day-box.sunday {
+    color: red; /* 日曜日の文字色を赤に */
+}
+
+.day-box.saturday {
+    color: blue; /* 土曜日の文字色を青に */
+}
+
+.day-box.holiday {
+    color: red; /* 祝日の文字色を赤に */
+}
+
+.day-header.sunday {
+    color: red; /* 日曜日のヘッダー文字色を赤に */
+}
+
+
+.day-header.saturday {
+    color: blue; /* 土曜日のヘッダー文字色を青に */
+}

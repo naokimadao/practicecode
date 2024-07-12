@@ -1,0 +1,71 @@
+/* 全体の設定 */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8; /* 背景色 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* 中央寄せ */
+}
+
+/* ログインコンテナの設定 */
+.login-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: center;
+    margin-top: 20px; /* 上部に余白を追加 */
+}
+
+/* ヘッダーの設定 */
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* インプットグループの設定 */
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* ラベルの設定 */
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* インプットフィールドの設定 */
+.input-group input[type="text"],
+.input-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* ボタンの設定 */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px; /* ボタンの上に余白を追加 */
+}
+
+button:hover {
+    background-color: #0056b3;
+}

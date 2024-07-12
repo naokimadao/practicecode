@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header .header-top {
+    width: 100%;
+    display: block;
+}
+
+#header-image {
+    width: 100%;
+    max-height: 300px;  /* 画像の最大高さを300pxに制限 */
+    object-fit: cover;  /* 画像のアスペクト比を保ちつつ、指定した高さに収まるように調整 */
+}
+
+.navigation-bar {
+    background-color: #c59a62;  /* ナビゲーションバーの背景色を設定 */
+    height: 150px;  /* ナビゲーションバーの高さを150pxに設定 */
+}
+.navigation-bar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    display: flex;  /* 項目を横並びにする */
+    justify-content: center;  /* 項目を中央に配置 */
+}
+.navigation-bar ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* 項目を中央に配置 */
+}
+
+.navigation-bar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navigation-bar ul li img {
+    vertical-align: middle;
+    margin-right: 100px;
+    width: 100px;  /* 画像の幅を200pxに設定 */
+    height: 100px;  /* 画像の高さを200pxに設定 */
+}
+/* リンクにマウスオーバーした際のスタイル */
+.navigation-bar ul li a:hover {
+    color: #a2a2a2;
+}

@@ -1,5 +1,6 @@
 import sqlite3
 import bcrypt
+from dbcheck import checktebleflag
 
 
 def insert_record(timestamp, data, name, password):
@@ -31,8 +32,8 @@ def insert_record(timestamp, data, name, password):
     if deleted_ids:
         new_id = min(deleted_ids)
     else:
-        new_id = max(existing_ids) + 1
-
+         new_id = max(existing_ids) + 1
+   
    
     # レコードの挿入
     cur.execute('INSERT INTO records (id, timestamp, data, name, pass) VALUES (?, ?, ?, ?, ?)', 

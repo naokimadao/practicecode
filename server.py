@@ -7,8 +7,12 @@ from dbupdate import update_record
 from dballrecords import get_all_records
 from dbdelete_all_records import delete_all_records
 from loginpass_name import verify_user
-import bcrypt
+from http.cookies import SimpleCookie
+from urllib.parse import quote
+from dbrecordinsert import insert_day_records
 import json
+import requests
+import secrets
 
 #-----------------------------------------------------------------------------------------------------
 #このファイルは、検索、追加、削除、更新の機能を全て実現したバージョンとなる。細かい修正と、コードの読みにくさは改善してない。
@@ -17,13 +21,52 @@ import json
 #新しいバイトコードを自動生成させる必要があることに気づく2024/05/12
 #-----------------------------------------------------------------------------------------------------
 
+# このファイルは、HTTPサーバーを起動し、リクエストを受け取るためのものです。
 
-class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):#
+
+
+
+class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):
+    # def is_authenticated(self):
+    #     # ユーザー認証の確認
+    #     pass
+
+    # def get_username(self):
+    #     # ユーザー名を取得
+    #     pass
+
     def do_GET(self):#getメソッドによるリクエストをここで受け取る。
         # URLの解析
+        
         parsed_url = urlparse(self.path)
         path = parsed_url.path
         query_components = parse_qs(parsed_url.query)
+
+        
+        # ログインページへのリダイレクト
+        if path == '/':
+            self.send_response(302)
+            self.send_header('Location', '/html/login.html')
+            self.end_headers()
+            return
+
+        # if path == '/get-user':
+        #     if not self.is_authenticated():
+        #         self.send_response(302)
+        #         self.send_header('Location', '/login.html')
+        #         self.end_headers()
+        #         return
+
+            # # ユーザー名を取得
+            # username = self.get_username()
+
+            # ユーザー名をレスポンスに含める
+            # self.send_response(200)
+            # self.send_header('Content-type', 'application/json')
+            # self.end_headers()
+            # self.wfile.write(json.dumps({'username': username}).encode())
+
+
 
         # `/get-record` エンドポイントの処理
         if path == '/get-record':
@@ -144,10 +187,11 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):#
                 password = credentials.get('password')
                 valid, message = verify_user(username, password)
                 if valid:
+                    encoded_username = quote(username)#ユーザー名をquote関数でエンコードしている。「この記述がないとローマ字しか読み取れない。」
                     self.send_response(200)
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
-                    response = {'status': 'success', 'message': message}
+                    response = {'status': 'success','message': message, 'username': encoded_username}#この場所で、ユーザー名をエンコードしている。漢字などのひらがな、カタカナ、漢字などをエンコード「jsonから読み取れる様に」するためには、quote関数を使う必要がある。
                     self.wfile.write(json.dumps(response).encode('utf-8'))
                 else:
                     self.send_response(401)
@@ -156,7 +200,35 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):#
                     response = {'status': 'fail', 'message': message}
                     self.wfile.write(json.dumps(response).encode('utf-8'))
             except Exception as e:
-                self.send_error(500, 'Server Error: {}'.format(e))
+                self.send_response(500)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                response = {'status': 'error', 'message': str(e)}
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+
+        elif self.path == '/saveDayRecords':
+            try:
+                content_length = int(self.headers['Content-Length'])
+                post_data = self.rfile.read(content_length)
+                data = json.loads(post_data.decode('utf-8'))
+
+                username = data.get('username')
+                records = data.get('records')
+
+                insert_day_records(username, records)
+
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                response = {'status': 'success'}
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            except Exception as e:
+                self.send_response(500)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                response = {'status': 'error', 'message': str(e)}
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+
 
     def do_DELETE(self):
         if self.path == '/delete-all-records':
@@ -169,10 +241,27 @@ class CustomHTTPRequestHandler(SimpleHTTPRequestHandler):#
                 self.wfile.write(json.dumps(response).encode('utf-8'))
             except Exception as e:
                 self.send_error(500, 'Server Error: {}'.format(e))
+    
+    # def is_authenticated(self):
+    #     # クッキーからユーザー名を取得
+    #     if 'Cookie' in self.headers:
+    #         cookie = SimpleCookie(self.headers.get('Cookie'))
+    #         return 'username' in cookie
+    #     return False
+
+    # def get_username(self):
+    #     # クッキーからユーザー名を取得
+    #     if 'Cookie' in self.headers:
+    #         cookie = SimpleCookie(self.headers.get('Cookie'))
+    #         if 'username' in cookie:
+    #             return cookie['username'].value
+    #     return None
+    
+
 # アドレス
-server_address = ('localhost', 8040)
+server_address = ('localhost', 8005)
 
 # Webサーバー起動
 with HTTPServer(server_address, CustomHTTPRequestHandler) as server:
-    print("Server running on port 8040...")
+    print("Server running on port 8005...")
     server.serve_forever()
